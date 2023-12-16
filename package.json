@@ -1,5 +1,5 @@
 {
-  "name": "Gemini_CLI_Chatbot",
+  "name": "gemini",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google/generative-ai": "^0.1.1"
+    "@google/generative-ai": "^0.1.1",
+    "html-to-text": "^9.0.5",
+    "markdown-it": "^14.0.0"
   },
   "devDependencies": {
     "dotenv": "^16.3.1"
