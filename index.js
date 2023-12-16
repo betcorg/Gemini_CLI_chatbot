@@ -16,6 +16,7 @@ async function prompt() {
     });
 }
 
+// Starts de chatbot
 async function run() {
 
     const chat = await gemini.startChat();
@@ -28,6 +29,9 @@ async function run() {
         // Gets a prompt from the user and adds it to the history array.
         const question = await prompt();
         console.log('\n');
+
+        // some input validation...
+
         const userQuestion = { role: 'user', parts: question };
         [...history, userQuestion];
 
