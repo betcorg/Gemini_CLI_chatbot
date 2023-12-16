@@ -1,7 +1,9 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const toText = require('./toPlainText');
 
-//  Creates a new instance of the class GoogleGenerativeAI and configures the api key
+// Creates a new instance of the class GoogleGenerativeAI and configures the api key
+// Get your api key here: https://makersuite.google.com/app/apikey
+// Documentation here:  https://ai.google.dev/docs/
 const genAI = new GoogleGenerativeAI(process.env.G_API_KEY);
 
 // Sets the model to use for the chat
@@ -11,7 +13,6 @@ const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 async function startChat() {
 
     // Model parameters to manipulate the output
-    // https://ai.google.dev/docs/concepts?hl=es-419#model_parameters
     const generationConfig = {
         // stopSequences: ["red"],
         maxOutputTokens: 1200,
