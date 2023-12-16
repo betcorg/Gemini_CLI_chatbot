@@ -39,4 +39,5 @@ async function run() {
         await gemini.getResponse(question, chat, history);
     }
 }
+
 run();
