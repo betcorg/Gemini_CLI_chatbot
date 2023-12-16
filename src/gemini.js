@@ -18,9 +18,10 @@ async function startChat() {
         temperature: 0.9,
         // topP: 0.1,
         // topK: 16,
-    };
+    }
     
     // Inicializes the chat mode that enables history chat and passes the configuration object
+    // these two examples work as context to guide the conversation
     const chat = model.startChat({
         history: [
             { role: 'user', parts: "Actúa como un experto en desarrollo de software con nodejs" },
@@ -29,7 +30,7 @@ async function startChat() {
         generationConfig,
     });
     return chat;
-};
+}
 
 // Generates a response from model
 async function getResponse(prompt, chat, history) {
@@ -53,4 +54,4 @@ async function getResponse(prompt, chat, history) {
 module.exports = { 
     startChat,
     getResponse, 
-};
+}
