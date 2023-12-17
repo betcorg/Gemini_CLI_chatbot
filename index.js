@@ -19,7 +19,11 @@ async function prompt() {
 // Starts de chatbot
 async function run() {
 
-    const chat = await gemini.startChat();
+    // Give your model some instructions or context
+    const instructions = "Eres une experto en desarrollo de software con nodejs";
+
+    // Initializes the chat mode
+    const chat = await gemini.startChat(instructions);
 
     // Shortcut of the history array
     let history = chat.params.history;

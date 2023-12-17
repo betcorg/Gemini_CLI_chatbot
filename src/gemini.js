@@ -1,10 +1,10 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
-const toText = require('./toPlainText');
+const formatter = require('./text-formatter');
 
 
 const geminiPro = 'gemini-pro';
 
-async function startChat() {
+async function startChat(instructions) {
 
     try {
         // Creates a new instance of the class GoogleGenerativeAI and configures the api key
@@ -28,8 +28,8 @@ async function startChat() {
         // these two examples work as context to guide the conversation
         const chat = model.startChat({
             history: [
-                { role: 'user', parts: "Actúa como un experto en desarrollo de software con nodejs" },
-                { role: 'model', parts: 'De acuerdo, estaré atento a tus preguntas' },
+                { role: 'user', parts: instructions },
+                { role: 'model', parts: 'ok' },
             ],
             generationConfig,
         });
@@ -44,17 +44,24 @@ async function startChat() {
 async function getResponse(prompt, chat, history) {
 
     try {
-        // uses the sendMessage() method of the chat object to send the prompt to the model
-        // and returns a promise that resolves to the response from the model.
-        // then, add the model response to the history array and return the response.
+        // Uses the sendMessageStream() method of the chat object to send the prompt to the model
+        // and returns a readable stream.
         const result = await chat.sendMessageStream(prompt);
     
         let text = '';
+
+        // Prints the response from the model to the console chunk by chunk.
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            console.log('\x1b[34m%s\x1b[0m', toText(chunkText));
+
+            // This line convets the markdown output to a terminal readable format with syntax highlighting
+            console.log(formatter(chunkText));
+
+            // Concats the chunks
             text += chunkText;
         }
+
+        // Updates the chat history adding the model response
         const modelResponse = { role: 'model', parts: text };
         [...history, modelResponse];
         return;
