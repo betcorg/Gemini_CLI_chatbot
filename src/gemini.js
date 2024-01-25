@@ -1,10 +1,11 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
-const formatter = require('./text-formatter');
+import { GoogleGenerativeAI } from'@google/generative-ai';
+import {formatter} from './text-formatter.js';
+
 
 
 const geminiPro = 'gemini-pro';
 
-async function startChat(instructions) {
+export async function startChat(instructions) {
 
     try {
         // Creates a new instance of the class GoogleGenerativeAI and configures the api key
@@ -19,7 +20,7 @@ async function startChat(instructions) {
         const generationConfig = {
             // stopSequences: ["red"],
             maxOutputTokens: 1200,
-            temperature: 0.9,
+            temperature: 0.4,
             // topP: 0.1,
             // topK: 16,
         }
@@ -41,26 +42,27 @@ async function startChat(instructions) {
 }
 
 // Generates a response from model
-async function getResponse(prompt, chat, history) {
+export async function getResponse(prompt, chat, history) {
 
     try {
         // Uses the sendMessageStream() method of the chat object to send the prompt to the model
         // and returns a readable stream.
-        const result = await chat.sendMessageStream(prompt);
+        // const result = await chat.sendMessageStream(prompt);
+        const result = await chat.sendMessage(prompt);
     
-        let text = '';
-
+        // let text = '';
         // Prints the response from the model to the console chunk by chunk.
-        for await (const chunk of result.stream) {
-            const chunkText = chunk.text();
+        // for await (let chunk of result.stream) {
+        //     let chunkText = chunk.text();
+        //     // This line convets the markdown output to a terminal readable format with syntax highlighting
+        //     console.log(chunkText);
+        //     // Concats the chunks
+        //     text += chunkText;
+        // }
 
-            // This line convets the markdown output to a terminal readable format with syntax highlighting
-            console.log(formatter(chunkText));
-
-            // Concats the chunks
-            text += chunkText;
-        }
-
+        const text = result.response.text();
+        process.stdout.write(formatter(text));
+        //process.stdout.write(text);
         // Updates the chat history adding the model response
         const modelResponse = { role: 'model', parts: text };
         [...history, modelResponse];
@@ -70,9 +72,4 @@ async function getResponse(prompt, chat, history) {
         console.log(`An error occured while generating a respose from the model ${geminiPro}:`, error.message);
     }
 
-}
-
-module.exports = { 
-    startChat,
-    getResponse, 
 }
