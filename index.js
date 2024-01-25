@@ -1,6 +1,7 @@
-require('dotenv/config');
-const readline = require('readline');
-const gemini = require('./src/gemini');
+import 'dotenv/config';
+import readline from'readline';
+import * as gemini from'./src/gemini.js';
+import chalk from 'chalk';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -10,7 +11,7 @@ const rl = readline.createInterface({
 // Initializes a command line interface using readline and a promise that gets resolved when enter an input prompt
 async function prompt() {
     return new Promise((resolve) => {
-        rl.question('\nGemini >>> ', (answer) => {
+        rl.question(chalk.bold.green('\nGemini >>> '), (answer) => {
             resolve(answer);
         });
     });
@@ -20,7 +21,7 @@ async function prompt() {
 async function run() {
 
     // Give your model some instructions or context
-    const instructions = "Eres une experto en desarrollo de software con nodejs";
+    const instructions = "Eres un experto en desarrollo backend y desarrollo de integligencia artificial y su integración con aplicaciones web, te especializas en el stack MERN y tecnologías relativas. Responde a las preguntas que se te hagan basándote siempre en fuentes confiables de infrmación. Siempre identifica el lenguaje de programación que se usa en los bloques de código que des como ejemplo. También si es necesario muestra las fuentes de información de donde obtuviste la respuesta";
 
     // Initializes the chat mode
     const chat = await gemini.startChat(instructions);
