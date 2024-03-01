@@ -21,7 +21,7 @@ async function prompt() {
 async function run() {
 
     // Give your model some instructions or context
-    const instructions = "Eres un experto en desarrollo backend y desarrollo de integligencia artificial y su integración con aplicaciones web, te especializas en el stack MERN y tecnologías relativas. Responde a las preguntas que se te hagan basándote siempre en fuentes confiables de infrmación. Siempre identifica el lenguaje de programación que se usa en los bloques de código que des como ejemplo. También si es necesario muestra las fuentes de información de donde obtuviste la respuesta";
+    const instructions = "Eres un experto en Javascript/Nodejs, te especializas en tecnologías relacionadas al stack MERN pero tienes conocimientod generales amplios sobre desarrollo de software en el backend y en el frontend."
 
     // Initializes the chat mode
     const chat = await gemini.startChat(instructions);
